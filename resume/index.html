@@ -51,22 +51,29 @@
   .mono { font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace; }
 
   /* ──────────────────────────────────────────
-     Page shell — two A4 pages stacked
+     Page shell — A4 pages flow horizontally
      ────────────────────────────────────────── */
   .stage {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 48px 24px 96px;
+    flex-direction: row;
+    align-items: flex-start;
+    /* Side padding equals half the leftover viewport so the first page is
+       centered on load and the last page can be scrolled to center too. */
+    padding: 48px max(24px, calc(50vw - 397px)) 96px;
     gap: 32px;
+    width: max-content;
   }
   .page {
     position: relative;
-    width: 820px;
+    width: 794px;   /* A4: 210mm @ 96dpi */
+    height: 1123px; /* A4: 297mm @ 96dpi */
     background: var(--bg-card);
     color: var(--ink);
     box-shadow: 0 1px 0 var(--rule), 0 24px 60px -30px rgba(0,0,0,0.18);
     border: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
   :root[data-theme="dark"] .page {
     box-shadow: 0 1px 0 var(--rule), 0 24px 60px -30px rgba(0,0,0,0.6);
@@ -81,8 +88,8 @@
     background: var(--rule);
     pointer-events: none;
   }
-  .page::before { left: 48px; }
-  .page::after { right: 48px; }
+  .page::before { left: 40px; }
+  .page::after { right: 40px; }
 
   /* Plus marker decorator */
   .plus {
@@ -113,7 +120,7 @@
     color: var(--ink-dim);
   }
   .header {
-    padding: 44px 80px 32px;
+    padding: 36px 64px 24px;
     border-bottom: 1px solid var(--rule);
     position: relative;
   }
@@ -127,11 +134,11 @@
   .name {
     font-family: "Geist", sans-serif;
     font-weight: 600;
-    font-size: 44px;
+    font-size: 38px;
     letter-spacing: -0.035em;
     line-height: 1;
     color: var(--ink);
-    margin: 18px 0 6px;
+    margin: 16px 0 6px;
   }
   .role {
     font-family: "Geist Mono", monospace;
@@ -149,9 +156,9 @@
     box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 18%, transparent);
   }
   .summary {
-    margin-top: 24px;
+    margin-top: 18px;
     max-width: 60ch;
-    font-size: 14.5px;
+    font-size: 13px;
     line-height: 1.55;
     color: var(--ink-soft);
     font-weight: 400;
@@ -163,15 +170,17 @@
      ────────────────────────────────────────── */
   .body {
     display: grid;
-    grid-template-columns: 1fr 248px;
+    grid-template-columns: 1fr 232px;
+    flex: 1;
+    min-height: 0;
   }
-  .col-main { padding: 32px 32px 40px 80px; border-right: 1px solid var(--rule); }
-  .col-side { padding: 32px 80px 40px 32px; }
+  .col-main { padding: 24px 24px 28px 64px; border-right: 1px solid var(--rule); }
+  .col-side { padding: 24px 64px 28px 24px; }
 
-  .section + .section { margin-top: 36px; }
+  .section + .section { margin-top: 24px; }
   .section-head {
     display: flex; align-items: baseline; gap: 12px;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
   }
   .section-head .num {
     font-family: "Geist Mono", monospace;
@@ -196,12 +205,12 @@
   /* Experience entries */
   .xp {
     display: grid;
-    grid-template-columns: 132px 1fr;
-    gap: 20px;
-    padding: 18px 0;
+    grid-template-columns: 118px 1fr;
+    gap: 18px;
+    padding: 12px 0;
     border-top: 1px dashed var(--rule);
   }
-  .xp:first-of-type { border-top: none; padding-top: 6px; }
+  .xp:first-of-type { border-top: none; padding-top: 4px; }
   .xp .when { display: flex; flex-direction: column; gap: 4px; }
   .xp .when .date {
     font-family: "Geist Mono", monospace;
@@ -211,34 +220,34 @@
   }
   .xp .when .org {
     font-family: "Geist", sans-serif;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 600;
     color: var(--ink);
-    margin-top: 8px;
+    margin-top: 6px;
     letter-spacing: -0.01em;
   }
   .xp .when .title {
     font-family: "Geist", sans-serif;
-    font-size: 12.5px;
+    font-size: 11.5px;
     color: var(--ink-mute);
     font-weight: 400;
   }
-  .xp .what { color: var(--ink-soft); font-size: 13.5px; line-height: 1.55; }
-  .xp .what ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
-  .xp .what li { position: relative; padding-left: 16px; text-wrap: pretty; }
+  .xp .what { color: var(--ink-soft); font-size: 11.5px; line-height: 1.5; }
+  .xp .what ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 5px; }
+  .xp .what li { position: relative; padding-left: 14px; text-wrap: pretty; }
   .xp .what li::before {
     content: "";
-    position: absolute; left: 0; top: 9px;
+    position: absolute; left: 0; top: 8px;
     width: 6px; height: 1px; background: var(--ink-dim);
   }
 
   /* Sidebar */
-  .sidebar-block + .sidebar-block { margin-top: 32px; }
-  .pill-wrap { display: flex; flex-wrap: wrap; gap: 5px; }
+  .sidebar-block + .sidebar-block { margin-top: 16px; }
+  .pill-wrap { display: flex; flex-wrap: wrap; gap: 4px; }
   .pill {
     font-family: "Geist Mono", monospace;
-    font-size: 10.5px;
-    padding: 4px 8px;
+    font-size: 9px;
+    padding: 2.5px 5.5px;
     border: 1px solid var(--rule-strong);
     color: var(--ink-soft);
     border-radius: 3px;
@@ -254,41 +263,41 @@
     padding: 14px;
     position: relative;
   }
-  .tile + .tile { margin-top: 10px; }
+  .tile + .tile { margin-top: 8px; }
   .tile .tile-org {
     font-family: "Geist", sans-serif;
     font-weight: 600;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--ink);
     letter-spacing: -0.01em;
   }
   .tile .tile-sub {
     font-family: "Geist", sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     color: var(--ink-soft);
     margin-top: 4px;
-    line-height: 1.45;
+    line-height: 1.4;
   }
   .tile .tile-date {
     font-family: "Geist Mono", monospace;
-    font-size: 10.5px;
+    font-size: 9.5px;
     color: var(--ink-mute);
-    margin-top: 8px;
+    margin-top: 6px;
     display: block;
     letter-spacing: 0.02em;
   }
 
-  .contact-row { display: flex; flex-direction: column; gap: 10px; }
+  .contact-row { display: flex; flex-direction: column; gap: 8px; }
   .contact-row .ck {
     font-family: "Geist Mono", monospace;
-    font-size: 10.5px;
+    font-size: 9.5px;
     color: var(--ink-dim);
     text-transform: lowercase;
     letter-spacing: 0.04em;
   }
   .contact-row .cv {
     font-family: "Geist", sans-serif;
-    font-size: 13px;
+    font-size: 11.5px;
     color: var(--ink);
     font-weight: 500;
     word-break: break-all;
@@ -299,17 +308,23 @@
   /* ──────────────────────────────────────────
      Page 2 — projects
      ────────────────────────────────────────── */
-  .page-projects { padding: 44px 80px 56px; }
+  .page-projects {
+    padding: 32px 64px 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
   .projects {
-    margin-top: 24px;
+    margin-top: 14px;
     display: flex;
     flex-direction: column;
   }
   .project {
     display: grid;
-    grid-template-columns: 1fr 180px;
-    gap: 32px;
-    padding: 22px 0;
+    grid-template-columns: 1fr 168px;
+    gap: 24px;
+    padding: 10px 0;
     border-top: 1px solid var(--rule);
     align-items: start;
   }
@@ -318,23 +333,23 @@
   .project .p-name {
     font-family: "Geist", sans-serif;
     font-weight: 600;
-    font-size: 17px;
+    font-size: 14.5px;
     letter-spacing: -0.02em;
     color: var(--ink);
   }
   .project .p-sep { color: var(--ink-dim); }
   .project .p-org {
     font-family: "Geist Mono", monospace;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--ink-mute);
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
   .project .p-desc {
-    margin-top: 10px;
+    margin-top: 6px;
     color: var(--ink-soft);
-    font-size: 13.5px;
-    line-height: 1.6;
+    font-size: 11.5px;
+    line-height: 1.5;
     max-width: 62ch;
     text-wrap: pretty;
   }
@@ -344,10 +359,10 @@
   }
   .project .p-link {
     font-family: "Geist Mono", monospace;
-    font-size: 11px;
+    font-size: 10px;
     color: var(--ink-soft);
     text-decoration: none;
-    padding: 5px 9px;
+    padding: 4px 7px;
     border: 1px solid var(--rule-strong);
     border-radius: 3px;
     display: inline-flex; align-items: center; gap: 6px;
@@ -360,7 +375,7 @@
   }
   .project .p-stack .tag {
     font-family: "Geist Mono", monospace;
-    font-size: 10px;
+    font-size: 9.5px;
     color: var(--ink-dim);
     letter-spacing: 0.03em;
   }
@@ -370,21 +385,27 @@
 
   /* Footer band */
   .page-foot {
-    padding: 14px 80px 18px;
+    padding: 12px 64px 14px;
     border-top: 1px solid var(--rule);
     display: flex; justify-content: space-between;
     font-family: "Geist Mono", monospace;
-    font-size: 10px;
+    font-size: 9.5px;
     color: var(--ink-dim);
     letter-spacing: 0.06em;
     text-transform: uppercase;
+    margin-top: auto;
   }
 
-  /* Theme toggle FAB */
-  .theme-toggle {
+  /* Floating action bar */
+  .fab-bar {
     position: fixed;
     top: 20px; right: 20px;
     z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .theme-toggle {
     display: inline-flex;
     align-items: center;
     gap: 0;
@@ -414,26 +435,72 @@
     background: var(--ink);
     color: var(--bg-card);
   }
+  .save-pdf {
+    appearance: none;
+    background: var(--ink);
+    color: var(--bg-card);
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-family: "Geist Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 4px 16px -8px rgba(0,0,0,0.2);
+    transition: all 120ms ease;
+  }
+  .save-pdf:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .save-pdf svg { width: 12px; height: 12px; }
 
   /* Print */
   @media print {
     @page { size: A4; margin: 0; }
-    body { background: white; }
-    .theme-toggle { display: none !important; }
-    .stage { padding: 0; gap: 0; }
+
+    /* Preserve theme colors (light/dark) when saving to PDF */
+    html, body, *, *::before, *::after {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    body { background: var(--bg) !important; }
+
+    .fab-bar { display: none !important; }
+    .stage { display: block; width: auto; padding: 0; gap: 0; }
+
     .page {
-      width: 100%;
       box-shadow: none;
       border: none;
+      margin: 0;
       page-break-after: always;
+      break-after: page;
+    }
+    .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
     }
   }
 </style>
 </head>
 <body>
-  <div class="theme-toggle" role="group" aria-label="Theme">
-    <button type="button" data-theme-set="light" class="active">Light</button>
-    <button type="button" data-theme-set="dark">Dark</button>
+  <div class="fab-bar">
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button type="button" data-theme-set="light" class="active">Light</button>
+      <button type="button" data-theme-set="dark">Dark</button>
+    </div>
+    <button type="button" class="save-pdf" id="save-pdf" aria-label="Save resume as PDF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v12" />
+        <path d="m7 10 5 5 5-5" />
+        <path d="M5 21h14" />
+      </svg>
+      Save PDF
+    </button>
   </div>
 
   <div class="stage">
@@ -441,14 +508,14 @@
          PAGE 1 — header + experience + sidebar
          ───────────────────────────────────────────────────── -->
     <div class="page">
-      <span class="plus" style="left:48px;top:0"></span>
-      <span class="plus" style="left:calc(100% - 48px);top:0"></span>
-      <span class="plus" style="left:48px;top:184px"></span>
-      <span class="plus" style="left:calc(100% - 48px);top:184px"></span>
-      <span class="plus" style="left:calc(100% - 248px - 48px);top:184px"></span>
-      <span class="plus" style="left:48px;top:100%"></span>
-      <span class="plus" style="left:calc(100% - 48px);top:100%"></span>
-      <span class="plus" style="left:calc(100% - 248px - 48px);top:100%"></span>
+      <span class="plus" style="left:40px;top:0"></span>
+      <span class="plus" style="left:calc(100% - 40px);top:0"></span>
+      <span class="plus" style="left:40px;top:158px"></span>
+      <span class="plus" style="left:calc(100% - 40px);top:158px"></span>
+      <span class="plus" style="left:calc(100% - 232px - 40px);top:158px"></span>
+      <span class="plus" style="left:40px;top:100%"></span>
+      <span class="plus" style="left:calc(100% - 40px);top:100%"></span>
+      <span class="plus" style="left:calc(100% - 232px - 40px);top:100%"></span>
 
       <div class="header">
         <div class="row-top">
@@ -632,12 +699,12 @@
          PAGE 2 — projects
          ───────────────────────────────────────────────────── -->
     <div class="page">
-      <span class="plus" style="left:48px;top:0"></span>
-      <span class="plus" style="left:calc(100% - 48px);top:0"></span>
-      <span class="plus" style="left:48px;top:150px"></span>
-      <span class="plus" style="left:calc(100% - 48px);top:150px"></span>
-      <span class="plus" style="left:48px;top:100%"></span>
-      <span class="plus" style="left:calc(100% - 48px);top:100%"></span>
+      <span class="plus" style="left:40px;top:0"></span>
+      <span class="plus" style="left:calc(100% - 40px);top:0"></span>
+      <span class="plus" style="left:40px;top:120px"></span>
+      <span class="plus" style="left:calc(100% - 40px);top:120px"></span>
+      <span class="plus" style="left:40px;top:100%"></span>
+      <span class="plus" style="left:calc(100% - 40px);top:100%"></span>
 
       <div class="page-projects">
         <div class="row-top" style="display:flex;justify-content:space-between;">
@@ -829,6 +896,16 @@
 
       apply(initial);
       buttons.forEach(b => b.addEventListener("click", () => apply(b.dataset.themeSet)));
+
+      const savePdfBtn = document.getElementById("save-pdf");
+      if (savePdfBtn) {
+        savePdfBtn.addEventListener("click", () => {
+          const prevTitle = document.title;
+          document.title = "nathaniel-saludes-resume-v4";
+          window.print();
+          document.title = prevTitle;
+        });
+      }
     })();
   </script>
 </body>
