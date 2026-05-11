@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nathaniel Saludes — Software Engineer</title>
+<meta name="description" content="Resume of Nathaniel Saludes, Software Engineer based in Manila, Philippines." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #fafafa;
+    --bg-card: #ffffff;
+    --bg-tile: #f3f3f1;
+    --ink: #0a0a0a;
+    --ink-soft: #2a2a2a;
+    --ink-mute: #6a6a6a;
+    --ink-dim: #9a9a9a;
+    --rule: #e6e6e3;
+    --rule-strong: #d6d6d2;
+    --accent: #c2410c;
+    --plus: #c8c8c4;
+    --shadow: 0 0 0 1px rgba(0,0,0,0.02);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0a0a0a;
+    --bg-card: #0f0f0f;
+    --bg-tile: #141414;
+    --ink: #f5f5f4;
+    --ink-soft: #d4d4d2;
+    --ink-mute: #9a9a96;
+    --ink-dim: #6a6a66;
+    --rule: #1f1f1d;
+    --rule-strong: #2a2a28;
+    --accent: #fb923c;
+    --plus: #2a2a28;
+    --shadow: 0 0 0 1px rgba(255,255,255,0.02);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+  }
+  .mono { font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace; }
+
+  /* ──────────────────────────────────────────
+     Page shell — two A4 pages stacked
+     ────────────────────────────────────────── */
+  .stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 24px 96px;
+    gap: 32px;
+  }
+  .page {
+    position: relative;
+    width: 820px;
+    background: var(--bg-card);
+    color: var(--ink);
+    box-shadow: 0 1px 0 var(--rule), 0 24px 60px -30px rgba(0,0,0,0.18);
+    border: 1px solid var(--rule);
+  }
+  :root[data-theme="dark"] .page {
+    box-shadow: 0 1px 0 var(--rule), 0 24px 60px -30px rgba(0,0,0,0.6);
+  }
+
+  /* Vertical grid rails */
+  .page::before, .page::after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: var(--rule);
+    pointer-events: none;
+  }
+  .page::before { left: 48px; }
+  .page::after { right: 48px; }
+
+  /* Plus marker decorator */
+  .plus {
+    position: absolute;
+    width: 9px; height: 9px;
+    color: var(--plus);
+    pointer-events: none;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+  }
+  .plus::before, .plus::after {
+    content: "";
+    position: absolute;
+    background: currentColor;
+  }
+  .plus::before { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+  .plus::after  { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+
+  /* ──────────────────────────────────────────
+     Header band
+     ────────────────────────────────────────── */
+  .band-tag {
+    font-family: "Geist Mono", monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+  .header {
+    padding: 44px 80px 32px;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+  }
+  .header .row-top {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 24px;
+  }
+  .header .meta { text-align: right; display: flex; flex-direction: column; gap: 4px; }
+  .header .meta .k { color: var(--ink-dim); }
+  .header .meta .v { color: var(--ink-soft); }
+  .name {
+    font-family: "Geist", sans-serif;
+    font-weight: 600;
+    font-size: 44px;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: var(--ink);
+    margin: 18px 0 6px;
+  }
+  .role {
+    font-family: "Geist Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .role .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 18%, transparent);
+  }
+  .summary {
+    margin-top: 24px;
+    max-width: 60ch;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    font-weight: 400;
+    text-wrap: pretty;
+  }
+
+  /* ──────────────────────────────────────────
+     Body grid
+     ────────────────────────────────────────── */
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 248px;
+  }
+  .col-main { padding: 32px 32px 40px 80px; border-right: 1px solid var(--rule); }
+  .col-side { padding: 32px 80px 40px 32px; }
+
+  .section + .section { margin-top: 36px; }
+  .section-head {
+    display: flex; align-items: baseline; gap: 12px;
+    margin-bottom: 18px;
+  }
+  .section-head .num {
+    font-family: "Geist Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    font-weight: 500;
+  }
+  .section-head .label {
+    font-family: "Geist", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .section-head .rule {
+    flex: 1; height: 1px; background: var(--rule);
+    align-self: center;
+  }
+
+  /* Experience entries */
+  .xp {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 1px dashed var(--rule);
+  }
+  .xp:first-of-type { border-top: none; padding-top: 6px; }
+  .xp .when { display: flex; flex-direction: column; gap: 4px; }
+  .xp .when .date {
+    font-family: "Geist Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+  }
+  .xp .when .org {
+    font-family: "Geist", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-top: 8px;
+    letter-spacing: -0.01em;
+  }
+  .xp .when .title {
+    font-family: "Geist", sans-serif;
+    font-size: 12.5px;
+    color: var(--ink-mute);
+    font-weight: 400;
+  }
+  .xp .what { color: var(--ink-soft); font-size: 13.5px; line-height: 1.55; }
+  .xp .what ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 7px; }
+  .xp .what li { position: relative; padding-left: 16px; text-wrap: pretty; }
+  .xp .what li::before {
+    content: "";
+    position: absolute; left: 0; top: 9px;
+    width: 6px; height: 1px; background: var(--ink-dim);
+  }
+
+  /* Sidebar */
+  .sidebar-block + .sidebar-block { margin-top: 32px; }
+  .pill-wrap { display: flex; flex-wrap: wrap; gap: 5px; }
+  .pill {
+    font-family: "Geist Mono", monospace;
+    font-size: 10.5px;
+    padding: 4px 8px;
+    border: 1px solid var(--rule-strong);
+    color: var(--ink-soft);
+    border-radius: 3px;
+    background: var(--bg-card);
+    line-height: 1;
+    letter-spacing: 0.01em;
+  }
+  :root[data-theme="dark"] .pill { background: var(--bg-tile); }
+
+  .tile {
+    border: 1px solid var(--rule);
+    background: var(--bg-tile);
+    padding: 14px;
+    position: relative;
+  }
+  .tile + .tile { margin-top: 10px; }
+  .tile .tile-org {
+    font-family: "Geist", sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .tile .tile-sub {
+    font-family: "Geist", sans-serif;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    line-height: 1.45;
+  }
+  .tile .tile-date {
+    font-family: "Geist Mono", monospace;
+    font-size: 10.5px;
+    color: var(--ink-mute);
+    margin-top: 8px;
+    display: block;
+    letter-spacing: 0.02em;
+  }
+
+  .contact-row { display: flex; flex-direction: column; gap: 10px; }
+  .contact-row .ck {
+    font-family: "Geist Mono", monospace;
+    font-size: 10.5px;
+    color: var(--ink-dim);
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+  }
+  .contact-row .cv {
+    font-family: "Geist", sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    font-weight: 500;
+    word-break: break-all;
+  }
+  .contact-row .cv a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule-strong); padding-bottom: 1px; }
+  .contact-row .cv a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+
+  /* ──────────────────────────────────────────
+     Page 2 — projects
+     ────────────────────────────────────────── */
+  .page-projects { padding: 44px 80px 56px; }
+  .projects {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  .project {
+    display: grid;
+    grid-template-columns: 1fr 180px;
+    gap: 32px;
+    padding: 22px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .project:first-child { border-top: none; }
+  .project .p-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .project .p-name {
+    font-family: "Geist", sans-serif;
+    font-weight: 600;
+    font-size: 17px;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .project .p-sep { color: var(--ink-dim); }
+  .project .p-org {
+    font-family: "Geist Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-mute);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .project .p-desc {
+    margin-top: 10px;
+    color: var(--ink-soft);
+    font-size: 13.5px;
+    line-height: 1.6;
+    max-width: 62ch;
+    text-wrap: pretty;
+  }
+  .project .p-side {
+    display: flex; flex-direction: column; gap: 8px; align-items: flex-end;
+    padding-top: 4px;
+  }
+  .project .p-link {
+    font-family: "Geist Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 5px 9px;
+    border: 1px solid var(--rule-strong);
+    border-radius: 3px;
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--bg-tile);
+  }
+  .project .p-link:hover { color: var(--accent); border-color: var(--accent); }
+  .project .p-link .arrow { opacity: 0.6; }
+  .project .p-stack {
+    display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end;
+  }
+  .project .p-stack .tag {
+    font-family: "Geist Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.03em;
+  }
+  .project .p-stack .tag + .tag::before {
+    content: "·"; margin-right: 4px; color: var(--ink-dim);
+  }
+
+  /* Footer band */
+  .page-foot {
+    padding: 14px 80px 18px;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+    font-family: "Geist Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-dim);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  /* Theme toggle FAB */
+  .theme-toggle {
+    position: fixed;
+    top: 20px; right: 20px;
+    z-index: 50;
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    padding: 3px;
+    font-family: "Geist Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 16px -8px rgba(0,0,0,0.2);
+  }
+  .theme-toggle button {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--ink-mute);
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    font: inherit;
+    text-transform: uppercase;
+    transition: all 120ms ease;
+  }
+  .theme-toggle button.active {
+    background: var(--ink);
+    color: var(--bg-card);
+  }
+
+  /* Print */
+  @media print {
+    @page { size: A4; margin: 0; }
+    body { background: white; }
+    .theme-toggle { display: none !important; }
+    .stage { padding: 0; gap: 0; }
+    .page {
+      width: 100%;
+      box-shadow: none;
+      border: none;
+      page-break-after: always;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="theme-toggle" role="group" aria-label="Theme">
+    <button type="button" data-theme-set="light" class="active">Light</button>
+    <button type="button" data-theme-set="dark">Dark</button>
+  </div>
+
+  <div class="stage">
+    <!-- ─────────────────────────────────────────────────────
+         PAGE 1 — header + experience + sidebar
+         ───────────────────────────────────────────────────── -->
+    <div class="page">
+      <span class="plus" style="left:48px;top:0"></span>
+      <span class="plus" style="left:calc(100% - 48px);top:0"></span>
+      <span class="plus" style="left:48px;top:184px"></span>
+      <span class="plus" style="left:calc(100% - 48px);top:184px"></span>
+      <span class="plus" style="left:calc(100% - 248px - 48px);top:184px"></span>
+      <span class="plus" style="left:48px;top:100%"></span>
+      <span class="plus" style="left:calc(100% - 48px);top:100%"></span>
+      <span class="plus" style="left:calc(100% - 248px - 48px);top:100%"></span>
+
+      <div class="header">
+        <div class="row-top">
+          <span class="band-tag">Curriculum Vitae · v3.2026</span>
+          <div class="meta band-tag">
+            <span><span class="k">Loc</span> &nbsp; <span class="v">Manila, PH</span></span>
+            <span><span class="k">Open to</span> &nbsp; <span class="v">Remote · Hybrid</span></span>
+          </div>
+        </div>
+        <h1 class="name">Nathaniel Saludes</h1>
+        <span class="role"><span class="dot"></span>Software Engineer</span>
+        <p class="summary">
+          Frontend-leaning engineer focused on performance, accessibility, and well-crafted product UI. I ship rich web experiences in React and Next.js where design, code, and user intent stay in lock-step.
+        </p>
+      </div>
+
+      <div class="body">
+        <div class="col-main">
+          <div class="section">
+            <div class="section-head">
+              <span class="num">01 /</span>
+              <span class="label">Experience</span>
+              <span class="rule"></span>
+            </div>
+
+            <div class="xp">
+              <div class="when">
+                <span class="date">Oct 2024 — Present</span>
+                <span class="org">QontaHub</span>
+                <span class="title">React Developer</span>
+              </div>
+              <div class="what">
+                <ul>
+                  <li>Built the company marketing site on Next.js and Strapi CMS.</li>
+                  <li>Translated Figma specs and Jira stories into accessible, production-grade React components.</li>
+                  <li>Shipped AI features in the QontaHub app with OpenAI — inline editor autocomplete and PDF document analysis.</li>
+                  <li>Integrated Stripe to power the app's subscription billing — checkout, plan management, and webhook-driven entitlements.</li>
+                  <li>Restructured the monorepo with Turborepo and authored a composition-pattern component library used across products.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="xp">
+              <div class="when">
+                <span class="date">Aug 2022 — Oct 2024</span>
+                <span class="org">Sence1</span>
+                <span class="title">Software Engineer</span>
+              </div>
+              <div class="what">
+                <ul>
+                  <li>Converted Figma designs into pixel-perfect, responsive landing pages.</li>
+                  <li>Earned HubSpot CMS Developer certification; led delivery of Japan-based CMS projects (Invy, Save the Children Japan, CRH JP, PROGOS).</li>
+                  <li>Redesigned and rebuilt the company's official website in Figma and WordPress.</li>
+                  <li>Led internal workshops on WBS, logical thinking, and frontend best practices.</li>
+                  <li>Drove React (Next.js) development of the UPRIA real-estate platform.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="xp">
+              <div class="when">
+                <span class="date">Apr 2021 — Jul 2022</span>
+                <span class="org">Deloitte</span>
+                <span class="title">ServiceNow Analyst</span>
+              </div>
+              <div class="what">
+                <ul>
+                  <li>Designed and configured ServiceNow solutions to fit client requirements.</li>
+                  <li>Built automated workflows, Service Portal experiences, and custom widgets.</li>
+                  <li>Delivered ITSM and CSM implementations for clients across Australia and New Zealand.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="xp">
+              <div class="when">
+                <span class="date">May 2020 — Apr 2021</span>
+                <span class="org">Deloitte</span>
+                <span class="title">Intern — ServiceNow</span>
+              </div>
+              <div class="what">
+                <ul>
+                  <li>Trained on core ServiceNow products: ITSM, CSM, and HRSD.</li>
+                  <li>Built record producers, notification rules, and Service Portal customizations.</li>
+                  <li>Contributed to Western Sydney University's ServiceNow rollout — improving IT and customer service workflows.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-side">
+          <div class="sidebar-block">
+            <div class="section-head">
+              <span class="num">02 /</span>
+              <span class="label">Skills</span>
+            </div>
+            <div class="pill-wrap">
+              <span class="pill">TypeScript</span>
+              <span class="pill">JavaScript</span>
+              <span class="pill">React</span>
+              <span class="pill">Next.js</span>
+              <span class="pill">Node.js</span>
+              <span class="pill">Tailwind</span>
+              <span class="pill">Shadcn</span>
+              <span class="pill">Framer Motion</span>
+              <span class="pill">Tanstack</span>
+              <span class="pill">Zustand</span>
+              <span class="pill">i18next</span>
+              <span class="pill">React Router</span>
+              <span class="pill">LLM Integration</span>
+              <span class="pill">OpenAI</span>
+              <span class="pill">Plate.js</span>
+              <span class="pill">Strapi</span>
+              <span class="pill">PayloadCMS</span>
+              <span class="pill">Sanity</span>
+              <span class="pill">Firebase</span>
+              <span class="pill">Supabase</span>
+              <span class="pill">MongoDB</span>
+              <span class="pill">Express</span>
+              <span class="pill">Azure</span>
+              <span class="pill">Turborepo</span>
+              <span class="pill">Docker</span>
+              <span class="pill">Git</span>
+              <span class="pill">GitHub</span>
+              <span class="pill">Jira</span>
+              <span class="pill">Figma</span>
+            </div>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="section-head">
+              <span class="num">03 /</span>
+              <span class="label">Certifications</span>
+            </div>
+            <div class="tile">
+              <div class="tile-org">HubSpot</div>
+              <div class="tile-sub">Certified HubSpot CMS Developer</div>
+              <span class="tile-date">May 2021 — Jul 2022</span>
+            </div>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="section-head">
+              <span class="num">04 /</span>
+              <span class="label">Education</span>
+            </div>
+            <div class="tile">
+              <div class="tile-org">iACADEMY</div>
+              <div class="tile-sub">B.S. Computer Science, Software Engineering</div>
+              <span class="tile-date">2017 — 2021</span>
+            </div>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="section-head">
+              <span class="num">05 /</span>
+              <span class="label">Contact</span>
+            </div>
+            <div class="contact-row">
+              <div>
+                <div class="ck">email</div>
+                <div class="cv"><a href="mailto:saludesnathaniel@gmail.com">saludesnathaniel@gmail.com</a></div>
+              </div>
+              <div>
+                <div class="ck">portfolio</div>
+                <div class="cv"><a href="https://nathanielsaludes.com">nathanielsaludes.com</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-foot">
+        <span>Nathaniel Saludes — Software Engineer</span>
+        <span>01 / 02</span>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────────
+         PAGE 2 — projects
+         ───────────────────────────────────────────────────── -->
+    <div class="page">
+      <span class="plus" style="left:48px;top:0"></span>
+      <span class="plus" style="left:calc(100% - 48px);top:0"></span>
+      <span class="plus" style="left:48px;top:150px"></span>
+      <span class="plus" style="left:calc(100% - 48px);top:150px"></span>
+      <span class="plus" style="left:48px;top:100%"></span>
+      <span class="plus" style="left:calc(100% - 48px);top:100%"></span>
+
+      <div class="page-projects">
+        <div class="row-top" style="display:flex;justify-content:space-between;">
+          <span class="band-tag">Selected Work</span>
+          <span class="band-tag">2020 → 2026</span>
+        </div>
+        <h2 class="name" style="font-size:32px;margin-top:14px;">Projects</h2>
+        <p class="summary" style="margin-top:12px;">
+          A selection of products and sites I've shipped — from accounting platforms to studio brand sites.
+        </p>
+
+        <div class="projects">
+          <div class="project">
+            <div>
+              <div class="p-head">
+                <span class="p-name">QontaHub Web App</span>
+                <span class="p-sep">·</span>
+                <span class="p-org">QontaHub</span>
+              </div>
+              <p class="p-desc">
+                Accounting practice-management platform. Built the frontend with Shadcn, Tailwind, Tanstack, React PDF Viewer, and Plate.js for AI-powered editing — paired with a Chrome extension bridging the native client.
+              </p>
+            </div>
+            <div class="p-side">
+              <a class="p-link mono" href="https://app.qontahub.com" target="_blank" rel="noreferrer">
+                app.qontahub.com <span class="arrow">↗</span>
+              </a>
+              <div class="p-stack">
+                <span class="tag">React</span>
+                <span class="tag">C#</span>
+                <span class="tag">Turborepo</span>
+                <span class="tag">Firebase</span>
+                <span class="tag">Azure</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div>
+              <div class="p-head">
+                <span class="p-name">QontaHub Website</span>
+                <span class="p-sep">·</span>
+                <span class="p-org">QontaHub</span>
+              </div>
+              <p class="p-desc">
+                Solo-built marketing site for QontaHub. Next.js for performance, Shadcn for UI, Strapi for content, Cookiebot for GDPR, Firebase hosting — a content-driven site for the digital accounting industry.
+              </p>
+            </div>
+            <div class="p-side">
+              <a class="p-link mono" href="https://www.qontahub.com" target="_blank" rel="noreferrer">
+                www.qontahub.com <span class="arrow">↗</span>
+              </a>
+              <div class="p-stack">
+                <span class="tag">Next.js</span>
+                <span class="tag">Shadcn</span>
+                <span class="tag">Strapi</span>
+                <span class="tag">Firebase</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div>
+              <div class="p-head">
+                <span class="p-name">Simmer Studios Website v3</span>
+                <span class="p-sep">·</span>
+                <span class="p-org">Simmer Studios</span>
+              </div>
+              <p class="p-desc">
+                Performant, animated brand site for a restaurant-creative studio. Modular component system, fluid page transitions, and motion that stays true to the studio's playful identity.
+              </p>
+            </div>
+            <div class="p-side">
+              <a class="p-link mono" href="https://www.simmer-studios.com" target="_blank" rel="noreferrer">
+                www.simmer-studios.com <span class="arrow">↗</span>
+              </a>
+              <div class="p-stack">
+                <span class="tag">Next.js 15</span>
+                <span class="tag">Framer Motion</span>
+                <span class="tag">PayloadCMS</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div>
+              <div class="p-head">
+                <span class="p-name">UPRIA</span>
+                <span class="p-sep">·</span>
+                <span class="p-org">Sence1</span>
+              </div>
+              <p class="p-desc">
+                Real-estate platform connecting property seekers with certified agents. Server-component architecture for SEO and performance; built to ease lead generation and property discovery.
+              </p>
+            </div>
+            <div class="p-side">
+              <a class="p-link mono" href="https://www.upria.sence1.com" target="_blank" rel="noreferrer">
+                www.upria.sence1.com <span class="arrow">↗</span>
+              </a>
+              <div class="p-stack">
+                <span class="tag">Next.js</span>
+                <span class="tag">React Server Components</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div>
+              <div class="p-head">
+                <span class="p-name">Portfolio Website v1</span>
+                <span class="p-sep">·</span>
+                <span class="p-org">Personal</span>
+              </div>
+              <p class="p-desc">
+                Personal portfolio and online resume — Next.js 13 on the App Router with Sanity CMS for content.
+              </p>
+            </div>
+            <div class="p-side">
+              <a class="p-link mono" href="https://nathanielsaludes.com" target="_blank" rel="noreferrer">
+                nathanielsaludes.com <span class="arrow">↗</span>
+              </a>
+              <div class="p-stack">
+                <span class="tag">Next.js 13</span>
+                <span class="tag">Sanity</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div>
+              <div class="p-head">
+                <span class="p-name">Simmer Stories — RSVP</span>
+                <span class="p-sep">·</span>
+                <span class="p-org">Simmer Studios</span>
+              </div>
+              <p class="p-desc">
+                RSVP page built as part of the SJ × RK Dela Rosa wedding invitation site.
+              </p>
+            </div>
+            <div class="p-side">
+              <div class="p-stack">
+                <span class="tag">Next.js</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div>
+              <div class="p-head">
+                <span class="p-name">Emmy</span>
+                <span class="p-sep">·</span>
+                <span class="p-org">iACADEMY</span>
+              </div>
+              <p class="p-desc">
+                Software engineering capstone — a full-stack JS app paired with a wearable client that captures employee mood at time-in. Built to help HR reduce attrition by surfacing mood patterns and attendance insights.
+              </p>
+            </div>
+            <div class="p-side">
+              <div class="p-stack">
+                <span class="tag">JavaScript</span>
+                <span class="tag">Full-stack</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-foot">
+        <span>Nathaniel Saludes — Selected Projects</span>
+        <span>02 / 02</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const buttons = document.querySelectorAll(".theme-toggle button");
+      const stored = localStorage.getItem("resume-theme");
+      const initial = stored === "dark" || stored === "light"
+        ? stored
+        : (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+      function apply(theme) {
+        root.setAttribute("data-theme", theme);
+        buttons.forEach(b => b.classList.toggle("active", b.dataset.themeSet === theme));
+        localStorage.setItem("resume-theme", theme);
+      }
+
+      apply(initial);
+      buttons.forEach(b => b.addEventListener("click", () => apply(b.dataset.themeSet)));
+    })();
+  </script>
+</body>
+</html>
