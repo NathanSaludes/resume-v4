@@ -3,10 +3,13 @@
 	"name": "resume-v4",
 	"compatibility_date": "2026-05-11",
 	"compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+	"main": "worker.js",
 	"assets": {
-		"directory": "./public"
+		"directory": "./public",
+		"binding": "ASSETS"
 	},
 	"observability": {
 		"enabled": true
-	}
+	},
+	"services": [{ "binding": "INVOICE_APP", "service": "freelance-invoice" }]
 }
